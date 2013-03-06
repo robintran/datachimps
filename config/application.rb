@@ -61,6 +61,7 @@ module Datachimp
 
     config.generators do |gen|
       gen.test_framework :rspec
+      gen.fixture_replacement :factory_girl, :dir=>"spec/factories"
     end
   end
 end
