@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :name
 
+  has_many :contests
+  has_many :won_contests, class_name: "Contest", foreign_key: :winner_id
+
   def self.find_for_facebook_oauth(auth)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user
