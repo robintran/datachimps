@@ -1,5 +1,8 @@
 Datachimp::Application.routes.draw do
 
+  resources :entries
+
+
   resources :contests
 
 
@@ -9,6 +12,9 @@ Datachimp::Application.routes.draw do
 
   resource :contests do
     resource :entries do
+      member do
+        post :add_rating
+      end
       resource :feedbacks, only: [:create, :update, :destroy]
     end
   end
