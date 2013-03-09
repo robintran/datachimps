@@ -48,7 +48,7 @@ class EntriesController < ApplicationController
 
     respond_to do |format|
       if @entry.save
-        format.html { redirect_to @entry, notice: 'Entry was successfully created.' }
+        format.html { redirect_to contest_entry_url(@contest, @entry), notice: 'Entry was successfully created.' }
         format.json { render json: @entry, status: :created, location: @entry }
       else
         format.html { render action: "new" }
@@ -62,7 +62,7 @@ class EntriesController < ApplicationController
   def update
     respond_to do |format|
       if @entry.update_attributes(params[:entry])
-        format.html { redirect_to @entry, notice: 'Entry was successfully updated.' }
+        format.html { redirect_to contest_entry_url(@contest, @entry), notice: 'Entry was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -74,10 +74,10 @@ class EntriesController < ApplicationController
   def add_rating
     respond_to do |format|
       if @entry.update_rating(params[:rating])
-        format.html { redirect_to @entry, notice: 'Entry was successfully updated.' }
+        format.html { redirect_to contest_entry_url(@contest, @entry), notice: 'Entry was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to @entry, alert: 'Cannot update rating.' }
+        format.html { redirect_to contest_entry_url(@contest, @entry), alert: 'Cannot update rating.' }
         format.json { render json: @entry.errors, status: :unprocessable_entity }
       end
     end
@@ -88,7 +88,7 @@ class EntriesController < ApplicationController
   def destroy
     @entry.destroy
     respond_to do |format|
-      format.html { redirect_to entries_url }
+      format.html { redirect_to contest_entries_url(@contest) }
       format.json { head :no_content }
     end
   end

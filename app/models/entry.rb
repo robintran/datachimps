@@ -4,6 +4,8 @@ class Entry < ActiveRecord::Base
   belongs_to :user
   belongs_to :contest
 
+  has_many :feedbacks
+
   validates :contest, :user, :description, :data_set_url, presence: true
 
   validates :rating, inclusion: {in: 1..5}, if: Proc.new {|entry| entry.rating.present?}

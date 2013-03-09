@@ -70,7 +70,7 @@ describe EntriesController do
 
       it "redirects to the created entry" do
         post :create, {:entry => valid_form_attributes, contest_id: contest.id}
-        response.should redirect_to(Entry.last)
+        response.should redirect_to(contest_entry_url(contest, Entry.last))
       end
     end
 
@@ -112,7 +112,7 @@ describe EntriesController do
       it "redirects to the entry" do
         entry = Entry.create! valid_attributes
         put :update, {:id => entry.to_param, :entry => valid_form_attributes, contest_id: contest.id}
-        response.should redirect_to(entry)
+        response.should redirect_to(contest_entry_url(contest, entry))
       end
     end
 
@@ -146,7 +146,7 @@ describe EntriesController do
     it "redirects to the entries list" do
       entry = Entry.create! valid_attributes
       delete :destroy, {:id => entry.to_param, contest_id: contest.id}
-      response.should redirect_to(entries_url)
+      response.should redirect_to(contest_entries_url)
     end
   end
 
