@@ -4,6 +4,7 @@ FactoryGirl.define do
     password { "12345678" }
     password_confirmation { "12345678" }
     name { "John Doe" }
+    balanced_account_uri { "test_uri" }
 
     factory :user_with_oauth do
       provider { "facebook" }

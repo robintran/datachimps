@@ -12,6 +12,7 @@ gem 'omniauth-facebook'
 
 gem 'will_paginate'
 gem 'filepicker-rails'
+gem 'balanced'
 
 
 # Gems used only for assets and not required
