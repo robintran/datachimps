@@ -2,10 +2,10 @@
 
 %p
   %b Contest:
-  = @entry.contest_id
+  = link_to(@entry.contest.name, @entry.contest)
 %p
   %b User:
-  = @entry.user_id
+  = @entry.user.name
 %p
   %b Description:
   = @entry.description
@@ -13,6 +13,12 @@
   %b Data set url:
   = @entry.data_set_url
 
-= link_to 'Edit', edit_entry_path(@entry)
+= link_to 'Edit', edit_contest_entry_path(@contest, @entry)
 \|
-= link_to 'Back', entries_path
+= link_to 'Back', contest_entries_path(@contest)
+
+%h2 Feedbacks
+%p
+  = link_to "Add feedback", new_contest_entry_feedback_path(@contest, @entry)
+
+= render partial: "feedbacks/feedback", collection: @entry.feedbacks

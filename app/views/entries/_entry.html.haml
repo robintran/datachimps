@@ -1,0 +1,7 @@
+.entry
+  .user
+    = link_to entry.user.name, contest_entry_path(entry.contest, entry)
+  .url
+    = entry.data_set_url
+  .feedbacks
+    = pluralize(entry.feedbacks.count, "feedback")

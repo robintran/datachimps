@@ -63,5 +63,7 @@ module Datachimp
       gen.test_framework :rspec
       gen.fixture_replacement :factory_girl, :dir=>"spec/factories"
     end
+
+    config.filepicker_rails.api_key = ENV['FILEPICKER_IO_API_KEY']
   end
 end

@@ -2,6 +2,6 @@
 
 = render 'form'
 
-= link_to 'Show', @entry
+= link_to 'Show', contest_entry_path(@contest, @entry)
 \|
-= link_to 'Back', entries_path
+= link_to 'Back', contest_entries_path(@contest)

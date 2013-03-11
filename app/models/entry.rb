@@ -10,6 +10,8 @@ class Entry < ActiveRecord::Base
 
   validates :rating, inclusion: {in: 1..5}, if: Proc.new {|entry| entry.rating.present?}
 
+  validates :user_id, uniqueness: {scope: :contest_id, message: "cannot enter contest twice"}
+
   def update_rating(rating)
     self.rating = rating
     self.save

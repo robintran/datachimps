@@ -7,4 +7,5 @@ class Feedback < ActiveRecord::Base
   has_one :contest, through: :entry
 
   validates :content, presence: true
+  validates :user, presence: true
 end

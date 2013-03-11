@@ -6,4 +6,10 @@ class Contest < ActiveRecord::Base
   has_many :entries
 
   validates :bounty, :deadline, :description, :name, :user, presence: true
+  after_create :create_bounty
+
+  private
+  def create_bounty
+    # TODO
+  end
 end

@@ -9,6 +9,7 @@ describe Entry do
   it {should validate_presence_of(:description)}
   it {should validate_presence_of(:data_set_url)}
   it {should ensure_inclusion_of(:rating).in_array(1..5) }
+  it {should validate_uniqueness_of(:user_id).with_message("cannot enter contest twice").scoped_to(:contest_id)}
 
   describe '.update_rating' do
     let(:entry) { create(:entry) }

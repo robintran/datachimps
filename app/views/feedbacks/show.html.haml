@@ -1,12 +1,9 @@
 %p#notice= notice
 
 %p
-  %b Entry:
-  = @feedback.entry_id
-%p
   %b Content:
   = @feedback.content
 
-= link_to 'Edit', edit_feedback_path(@feedback)
+= link_to 'Edit', edit_contest_entry_feedback_path(@contest, @entry, @feedback)
 \|
-= link_to 'Back', feedbacks_path
+= link_to 'Back', contest_entry_feedbacks_path(@contest, @entry)

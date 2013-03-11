@@ -16,10 +16,10 @@
       %td= entry.user_id
       %td= entry.description
       %td= entry.data_set_url
-      %td= link_to 'Show', entry
-      %td= link_to 'Edit', edit_entry_path(entry)
-      %td= link_to 'Destroy', entry, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= link_to 'Show', contest_entry_path(@contest, entry)
+      %td= link_to 'Edit', edit_contest_entry_path(@contest, entry)
+      %td= link_to 'Destroy', contest_entry_path(@contest, entry), :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
-= link_to 'New Entry', new_entry_path
+= link_to 'New Entry', new_contest_entry_path(@contest)

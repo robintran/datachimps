@@ -5,10 +5,14 @@ class FeedbacksController < ApplicationController
   before_filter :verify_feedback_ownership, only: [:update, :destroy]
   before_filter :verify_feedback_post_right, only: [:create]
 
+  def new
+    @feedback = @entry.feedbacks.new
+  end
+
   # POST /feedbacks
   # POST /feedbacks.json
   def create
-    @feedback = @entry.feedbacks.new(params[:feedback])
+    @feedback = @entry.feedbacks.new(params[:feedback].merge(user: current_user))
 
     respond_to do |format|
       if @feedback.save
@@ -19,6 +23,9 @@ class FeedbacksController < ApplicationController
         format.json { render json: @feedback.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def edit
   end
 
   # PUT /feedbacks/1

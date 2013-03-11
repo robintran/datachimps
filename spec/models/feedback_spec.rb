@@ -5,4 +5,5 @@ describe Feedback do
   it {should belong_to(:user)}
   it {should have_one(:contest)}
   it {should validate_presence_of(:content)}
+  it {should validate_presence_of(:user)}
 end
