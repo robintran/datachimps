@@ -93,6 +93,18 @@ describe User do
       end
     end
 
+    describe '.credit_cards' do
+      let(:mock_account) { {} }
+      let(:expected) { [] }
+      before do
+        user.should_receive(:balanced_account).and_return(mock_account)
+        mock_account.should_receive(:cards).and_return(expected)
+      end
+      it "should delegate to balanced_account" do
+        expect(user.credit_cards).to eq(expected)
+      end
+    end
+
     describe '.add_credit_card' do
       let(:mock_marketplace) { OpenStruct.new(cards_uri: "cards_uri") }
       let(:mock_card_info) { {} }
@@ -123,6 +135,41 @@ describe User do
       end
     end
 
+    describe '.remove_credit_card' do
+      let(:mock_card_info) { {} }
+      let(:card_uri) { "card_uri" }
+      describe 'successful' do
+        before do
+          Balanced::Card.should_receive(:find).with(card_uri).and_return(mock_card_info)
+          mock_card_info.should_receive(:invalidate).and_return(true)
+        end
+        it "should return true" do
+          expect(user.remove_credit_card(card_uri)).to be_true
+        end
+      end
+
+      describe 'error' do
+        before do
+          Balanced::Card.should_receive(:find).with(card_uri).and_raise(Balanced::BadRequest.new(body: {extras: {}}))
+        end
+        it "should return false" do
+          expect(user.remove_credit_card(card_uri)).to be_false
+        end
+      end
+    end
+
+    describe '.bank_accounts' do
+      let(:mock_account) { {} }
+      let(:expected) { [] }
+      before do
+        user.should_receive(:balanced_account).and_return(mock_account)
+        mock_account.should_receive(:bank_accounts).and_return(expected)
+      end
+      it "should delegate to balanced_account" do
+        expect(user.bank_accounts).to eq(expected)
+      end
+    end
+
     describe '.add_bank_account' do
       let(:mock_marketplace) { OpenStruct.new(bank_accounts_uri: "bank_accounts_uri") }
       let(:mock_bank_info) { {} }
@@ -149,6 +196,29 @@ describe User do
         end
         it "should return false" do
           expect(user.add_bank_account({})).to be_false
+        end
+      end
+    end
+
+    describe '.remove_bank_account' do
+      let(:mock_bank_info) { {} }
+      let(:bank_account_uri) { "bank_account_uri" }
+      describe 'successful' do
+        before do
+          Balanced::BankAccount.should_receive(:find).with(bank_account_uri).and_return(mock_bank_info)
+          mock_bank_info.should_receive(:destroy).and_return(true)
+        end
+        it "should return true" do
+          expect(user.remove_bank_account(bank_account_uri)).to be_true
+        end
+      end
+
+      describe 'error' do
+        before do
+          Balanced::BankAccount.should_receive(:find).with(bank_account_uri).and_raise(Balanced::BadRequest.new(body: {extras: {}}))
+        end
+        it "should return false" do
+          expect(user.remove_bank_account(bank_account_uri)).to be_false
         end
       end
     end
