@@ -12,7 +12,7 @@ describe Contest do
   describe "on_create" do
     before { Contest.any_instance.unstub(:owner_has_account) }
 
-    describe "#owner_has_account?" do
+    describe "#owner_has_account" do
       context "create" do
         it "should be called" do
           contest.should_receive(:owner_has_account).and_return true
