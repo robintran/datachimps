@@ -273,4 +273,10 @@ describe User do
       end
     end
   end
+
+  describe ".follow" do
+    it "allow uset to follow a contest" do
+      pending
+    end
+  end
 end

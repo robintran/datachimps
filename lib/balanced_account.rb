@@ -34,7 +34,7 @@ module BalancedAccount
     balanced_account.bank_accounts
   end
 
-  def  add_bank_account(bank_account_info)
+  def add_bank_account(bank_account_info)
     banks_uri = marketplace.bank_accounts_uri
     bank_account = Balanced::BankAccount.new(bank_account_info.merge(uri: banks_uri)).save
     balanced_account.add_bank_account(bank_account.uri)

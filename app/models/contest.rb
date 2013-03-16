@@ -6,10 +6,23 @@ class Contest < ActiveRecord::Base
   has_many :entries
 
   validates :bounty, :deadline, :description, :name, :user, presence: true
-  after_create :create_bounty
+  validate :owner_has_account, :on => :create
+  after_create :create_bounty, :follow_contest
+
+  def pick_winner(win_entry)
+    win_entry.user.credit(bounty)
+  end
 
   private
+  def owner_has_account
+    errors.add(:base, "Owner must have an account to create a new contest.") unless user.balanced_account_uri.present?
+  end
+
   def create_bounty
-    # TODO
+    user.charge(bounty)
+  end
+
+  def follow_contest
+    user.follow(self)
   end
 end

@@ -30,7 +30,18 @@ class User < ActiveRecord::Base
     user
   end
 
+  def follow(contest)
+    # TODO
+    # allow uset to follow a contest "unless already_followed?(contest)"
+  end
+
+
   private
+
+  def already_followed?(contest)
+    #TODO
+  end
+
   def create_balanced_account
     unless self.balanced_account_uri
       account = marketplace.create_account

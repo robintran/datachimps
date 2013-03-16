@@ -32,6 +32,11 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::TestHelpers, type: :controller
 
+  config.before(:each) do
+    Contest.any_instance.stub(:owner_has_account)
+    Contest.any_instance.stub(:create_bounty)
+  end
+
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
