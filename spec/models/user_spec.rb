@@ -274,9 +274,7 @@ describe User do
     end
   end
 
-  describe ".follow" do
-    it "allow uset to follow a contest" do
-      pending
-    end
+  describe "#follow" do
+    it "allow user to follow a contest"
   end
 end
