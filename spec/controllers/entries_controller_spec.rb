@@ -150,16 +150,15 @@ describe EntriesController do
     end
   end
 
-  describe "POST add_rating" do
+  describe "POST rate" do
     let(:entry) { create(:entry, contest: contest, user: user) }
     before do
       sign_out :user
       sign_in contest.user
+      Entry.any_instance.should_receive(:rate).and_return(true)
     end
-    it "should call entry add_rating" do
-      post :add_rating, {:id => entry.to_param, contest_id: contest.id, rating: 5}
-      entry.reload
-      expect(entry.rating).to eq(5)
+    it "should call entry .rate" do
+      post :rate, {:id => entry.to_param, contest_id: contest.id, rating: 5}
     end
   end
 

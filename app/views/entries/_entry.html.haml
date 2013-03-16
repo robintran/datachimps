@@ -3,5 +3,7 @@
     = link_to entry.user.name, contest_entry_path(entry.contest, entry)
   .url
     = entry.data_set_url
+  %div.rating{id: "entry-rating-#{entry.id}"}
+    = entry_rating(entry)
   .feedbacks
     = pluralize(entry.feedbacks.count, "feedback")

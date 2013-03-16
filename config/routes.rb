@@ -6,7 +6,7 @@ Datachimp::Application.routes.draw do
   resources :contests do
     resources :entries do
       member do
-        post :add_rating
+        post :rate
       end
       resources :feedbacks, only: [:new, :create, :edit, :update, :destroy]
     end

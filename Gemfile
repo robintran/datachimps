@@ -13,6 +13,7 @@ gem 'omniauth-facebook'
 gem 'will_paginate'
 gem 'filepicker-rails'
 gem 'balanced'
+gem 'ajaxful_rating', :branch => 'rails3', :git => "git@github.com:edgarjs/ajaxful-rating.git"
 
 
 # Gems used only for assets and not required

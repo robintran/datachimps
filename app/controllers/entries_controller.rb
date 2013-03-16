@@ -1,9 +1,9 @@
 class EntriesController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show]
   before_filter :find_contest
-  before_filter :find_entry, only: [:edit, :update, :destroy, :add_rating]
+  before_filter :find_entry, only: [:edit, :update, :destroy, :rate]
   before_filter :verify_ownership, only: [:edit, :update, :destroy]
-  before_filter :verify_contest_ownership, only: [:add_rating]
+  before_filter :verify_contest_ownership, only: [:rate]
   # GET /entries
   # GET /entries.json
   def index
@@ -71,15 +71,11 @@ class EntriesController < ApplicationController
     end
   end
 
-  def add_rating
+  def rate
+    @entry.rate(params[:stars], current_user, params[:dimension])
     respond_to do |format|
-      if @entry.update_rating(params[:rating])
-        format.html { redirect_to contest_entry_url(@contest, @entry), notice: 'Entry was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { redirect_to contest_entry_url(@contest, @entry), alert: 'Cannot update rating.' }
-        format.json { render json: @entry.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to contest_entry_url(@contest, @entry) }
+      format.js { render layout: false }
     end
   end
 

@@ -12,6 +12,10 @@
 %p
   %b Data set url:
   = @entry.data_set_url
+%p
+  %b Rating
+%div{id: "entry-rating-#{@entry.id}"}
+  = entry_rating(@entry)
 
 = link_to 'Edit', edit_contest_entry_path(@contest, @entry)
 \|
