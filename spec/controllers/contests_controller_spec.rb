@@ -115,6 +115,13 @@ describe ContestsController do
         put :update, {:id => contest.to_param, :contest => valid_form_attributes}
         response.should redirect_to(contest)
       end
+
+      it "do not update bounty value" do
+        contest = Contest.create! valid_attributes
+        expect {
+          put :update, {:id => contest.to_param, :contest => valid_form_attributes.merge(:bounty => 11)}
+        }.not_to change {   contest.reload.bounty }
+      end
     end
 
     describe "with invalid params" do

@@ -58,7 +58,7 @@ class ContestsController < ApplicationController
   # PUT /contests/1.json
   def update
     respond_to do |format|
-      if @contest.update_attributes(params[:contest])
+      if @contest.update_attributes(params[:contest].except(:bounty))
         format.html { redirect_to @contest, notice: 'Contest was successfully updated.' }
         format.json { head :no_content }
       else

@@ -17,6 +17,9 @@
     = f.datetime_select :deadline
   .field
     = f.label :bounty
-    = f.number_field :bounty
+    - if @contest.new_record?
+      = f.number_field :bounty
+    - else
+      = f.number_field :bounty, :disabled => true
   .actions
     = f.submit 'Save'
