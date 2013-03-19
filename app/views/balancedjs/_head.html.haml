@@ -1,4 +1,3 @@
 = javascript_include_tag "https://js.balancedpayments.com/v1/balanced.js"
 :javascript
-  balanced.init('/v1/marketplaces/TEST-MPHd0xEHxs5Lc3Hb4nzMkSs')
-  // balanced.init('#{ENV[BALANCED_MARKET_PLACE_URI]}')
+  balanced.init("#{ENV['BALANCED_MARKET_PLACE_URI'] || BalancedSettings.market_place_uri}")

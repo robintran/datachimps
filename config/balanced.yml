@@ -1,0 +1,11 @@
+defaults: &defaults
+  market_place_uri: '/v1/marketplaces/TEST-MPHd0xEHxs5Lc3Hb4nzMkSs'
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
