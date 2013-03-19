@@ -13,8 +13,9 @@ gem 'omniauth-facebook'
 gem 'will_paginate'
 gem 'filepicker-rails'
 gem 'balanced'
-gem 'ajaxful_rating', :branch => 'rails3', :git => "git@github.com:edgarjs/ajaxful-rating.git"
-
+gem 'ajaxful_rating', :branch => 'rails3', :git => "git://github.com/edgarjs/ajaxful-rating.git"
+gem 'thin'
+gem 'settingslogic'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -52,4 +53,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'shoulda-matchers'
+  gem 'faker'
 end
+
+ruby '1.9.3'
