@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe User do
+  [:email, :password, :password_confirmation, :remember_me, :provider, :uid, :name, :balanced_account_uri].each do |attr|
+    it { should allow_mass_assignment_of attr }
+  end
+
+  it { should have_many :contests }
+  it { should have_many(:won_contests).class_name('Contest') }
+
   describe 'after_create' do
     describe '.create_balanced_account' do
       describe 'without existing uri' do
@@ -47,6 +54,10 @@ describe User do
     end
 
     let(:result) { User.find_for_facebook_oauth(auth_info) }
+
+    before do
+      User.any_instance.stub(:create_balanced_account)
+    end
 
     describe 'with user existed' do
       let!(:user) { create(:user, uid: uid, provider: provider) }

@@ -6,10 +6,10 @@
     = ajaxful_rating_style
     = render partial: "balancedjs/head"
     = javascript_include_tag "application"
-
     = csrf_meta_tags
     = yield :extra_js
   %body
+    = render 'shared/navigation' if user_signed_in?
     %p.notice= notice
     %p.alert= alert
     #main

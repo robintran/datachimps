@@ -1,0 +1,21 @@
+%h1 Listing credit_cards
+%table
+  %tr
+    %th Last four number
+    %th Brand
+    %th Expiration month
+    %th Expiration year
+    %th Valid?
+    %th
+    %th
+    %th
+  - @credit_cards.each do |credit_card|
+    %tr
+      %td= credit_card.last_four
+      %td= credit_card.brand
+      %td= credit_card.expiration_month
+      %td= credit_card.expiration_year
+      %td= credit_card.is_valid
+      %td= link_to 'Destroy', credit_card_path(1, uri: credit_card.uri) , :method => :delete, :data => { :confirm => 'Are you sure?' } if credit_card.is_valid
+%br
+= link_to 'New Credit card', new_credit_card_path

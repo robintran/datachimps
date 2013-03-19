@@ -1,0 +1,22 @@
+= form_for @bank_account do |f|
+  - if @bank_account.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@bank_account.errors.count, "error")} prohibited this bank_account from being saved:"
+      %ul
+        - @bank_account.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :type
+    = f.select :type, ['savings', 'checking'].map { |v| [v.camelize, v] }
+  .field
+    = f.label :account_number
+    = f.text_field :account_number
+  .field
+    = f.label :routing_number
+    = f.number_field :routing_number
+  .actions
+    = f.submit 'Save'
+

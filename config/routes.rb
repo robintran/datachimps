@@ -1,4 +1,7 @@
 Datachimp::Application.routes.draw do
+  resources :credit_cards, only: [:index, :new, :create, :destroy]
+  resources :bank_accounts, only: [:index, :new, :create, :destroy]
+
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   root :to => "contests#index"
