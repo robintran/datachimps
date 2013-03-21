@@ -13,7 +13,7 @@ class Contest < ActiveRecord::Base
   after_create :create_bounty, :follow_contest
 
   def pick_winner(win_entry)
-    return false if self.winner
+    return false if self.winner || win_entry.removed
     self.update_attributes(winner: win_entry)
     win_entry.user.credit(bounty * 0.9 * 100)
     return true
@@ -25,7 +25,7 @@ class Contest < ActiveRecord::Base
 
   private
   def owner_has_account
-    errors.add(:base, "Owner must have an account to create a new contest.") unless user.balanced_account_uri.present?
+    errors.add(:base, "Owner must have a credit card to create a new contest.") unless user.credit_cards.any?
   end
 
   def create_bounty

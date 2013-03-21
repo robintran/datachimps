@@ -14,7 +14,7 @@
       %td= link_to contest.name, contest
       %td= contest.description
       %td= contest.deadline
-      %td= contest.winner.name if contest.winner
+      %td= contest.winner.user.name if contest.winner
       %td= contest.bounty
       %td
         - if current_user.present?

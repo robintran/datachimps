@@ -12,7 +12,7 @@ class Entry < ActiveRecord::Base
 
   validates :user_id, uniqueness: {scope: :contest_id, message: "cannot enter contest twice"}
 
-  validate :owner_has_account, :contest_not_expired, :on => :create
+  validate :owner_has_account, :contest_not_expired, :own_contest, :on => :create
 
   after_create :follow_contest
 
@@ -24,6 +24,10 @@ class Entry < ActiveRecord::Base
   end
 
   private
+
+  def own_contest
+    errors.add(:base, "Cannot enter your own contest.") if contest.user == self.user
+  end
 
   def contest_not_expired
     errors.add(:base, "The contest is expired.") if contest.expired?

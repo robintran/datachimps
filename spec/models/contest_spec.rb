@@ -20,15 +20,16 @@ describe Contest do
         end
 
         it "add error message when 'balanced_account_uri' is blank" do
-          contest.user.stub(:balanced_account_uri).and_return nil
+          contest.user.stub(:credit_cards).and_return []
           contest.save
           contest.should_not be_valid
-          contest.errors.messages[:base].should == ["Owner must have an account to create a new contest."]
+          contest.errors.messages[:base].should == ["Owner must have a credit card to create a new contest."]
         end
       end
 
       context "update" do
         it "should not be called" do
+          contest.user.stub(:credit_cards).and_return [""]
           contest.save
           contest.should_not_receive(:owner_has_account)
           contest.update_attributes(:name => 'New name')
