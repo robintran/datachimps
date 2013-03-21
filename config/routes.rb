@@ -11,6 +11,8 @@ Datachimp::Application.routes.draw do
     resources :entries do
       member do
         post :rate
+        delete :remove
+        get :pick_winning
       end
       resources :feedbacks, only: [:new, :create, :edit, :update, :destroy]
     end

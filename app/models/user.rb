@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
     user
   end
 
+  def own?(contest)
+    contest.user_id == self.id
+  end
+
   def follow(contest)
     contest_followings.create(contest: contest)
   end

@@ -162,4 +162,41 @@ describe EntriesController do
     end
   end
 
+  describe "DELETE remove" do
+    let(:entry) { create(:entry, contest: contest, user: user) }
+    before do
+      sign_out :user
+      sign_in contest.user
+      Entry.any_instance.should_receive(:remove).and_return(true)
+    end
+    it "should call entry .remove" do
+      delete :remove, {:id => entry.to_param, contest_id: contest.id}
+      expect(response).to redirect_to(contest_url(contest))
+    end
+  end
+
+  describe 'GET pick_winning' do
+    let(:entry) { create(:entry, contest: contest, user: user) }
+    before do
+      sign_out :user
+      sign_in contest.user
+      Contest.any_instance.should_receive(:pick_winner).and_return(result)
+    end
+    describe 'can pick winner' do
+      let(:result) { true }
+      it "should flash notice" do
+        get :pick_winning, {:id => entry.to_param, contest_id: contest.id}
+        expect(flash[:notice]).to eq("Prize awarded to winner")
+      end
+    end
+
+    describe 'cannot pick winner' do
+      let(:result) { false }
+      it "should flash notice" do
+        get :pick_winning, {:id => entry.to_param, contest_id: contest.id}
+        expect(flash[:error]).to eq("Error picking winner")
+      end
+    end
+  end
+
 end

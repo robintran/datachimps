@@ -2,7 +2,7 @@ class Contest < ActiveRecord::Base
   attr_accessible :bounty, :deadline, :description, :name, :user, :winner, :winner_id
 
   belongs_to :user
-  belongs_to :winner, class_name: "User", foreign_key: :winner_id
+  belongs_to :winner, class_name: "Entry", foreign_key: :winner_id
   has_many :entries
   has_many :contestants, source: :user, through: :entries
   has_many :contest_followings, dependent: :destroy
@@ -13,7 +13,14 @@ class Contest < ActiveRecord::Base
   after_create :create_bounty, :follow_contest
 
   def pick_winner(win_entry)
-    win_entry.user.credit(bounty)
+    return false if self.winner
+    self.update_attributes(winner: win_entry)
+    win_entry.user.credit(bounty * 0.9 * 100)
+    return true
+  end
+
+  def expired?
+    winner.present? || deadline <= Time.now
   end
 
   private

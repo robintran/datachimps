@@ -40,8 +40,9 @@ ActiveRecord::Schema.define(:version => 20130320153440) do
     t.text     "description"
     t.string   "data_set_url"
     t.integer  "rating"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.boolean  "removed",      :default => false
   end
 
   create_table "feedbacks", :force => true do |t|

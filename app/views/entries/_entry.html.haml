@@ -5,5 +5,10 @@
     = entry.data_set_url
   %div.rating{id: "entry-rating-#{entry.id}"}
     = entry_rating(entry)
+  - if current_user.own?(entry.contest)
+    .pick-winner
+      = link_to "Pick as winner", pick_winning_contest_entry_path(entry.contest, entry), confirm: "Are you sure?"
+    .remove
+      = link_to "Remove this entry", remove_contest_entry_path(entry.contest, entry), method: :delete, confirm: "Are you sure?"
   .feedbacks
     = pluralize(entry.feedbacks.count, "feedback")

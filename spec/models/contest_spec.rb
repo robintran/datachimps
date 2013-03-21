@@ -66,12 +66,21 @@ describe Contest do
   end
 
   describe "#pick_winner" do
-    let!(:entry) { create(:entry) }
-    let(:entry_contest) { entry.contest }
+    let(:contest) { create(:contest) }
+    let!(:entry) { create(:entry, contest: contest) }
+    let!(:another_entry) { create(:entry, contest: contest) }
+    describe 'successful' do
+      it "credit entry's owner by 'bounty' amount" do
+        entry.user.should_receive(:credit).with(contest.bounty * 90)
+        expect(contest.pick_winner(entry)).to be_true
+      end
+    end
 
-    it "credit entry's owner by 'bounty' amount" do
-      entry.user.should_receive(:credit).with(entry_contest.bounty)
-      entry_contest.pick_winner(entry)
+    describe 'unsuccessful' do
+      it "should return false" do
+        contest.update_attributes(winner: entry)
+        expect(contest.pick_winner(another_entry)).to be_false
+      end
     end
   end
 end

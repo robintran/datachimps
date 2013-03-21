@@ -1,13 +1,13 @@
 class EntriesController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show]
   before_filter :find_contest
-  before_filter :find_entry, only: [:edit, :update, :destroy, :rate]
+  before_filter :find_entry, except: [:index, :new, :create]
   before_filter :verify_ownership, only: [:edit, :update, :destroy]
-  before_filter :verify_contest_ownership, only: [:rate]
+  before_filter :verify_contest_ownership, only: [:rate, :remove]
   # GET /entries
   # GET /entries.json
   def index
-    @entries = Entry.all
+    @entries = @contest.entries.active
 
     respond_to do |format|
       format.html # index.html.erb
@@ -77,6 +77,20 @@ class EntriesController < ApplicationController
       format.html { redirect_to contest_entry_url(@contest, @entry) }
       format.js { render layout: false }
     end
+  end
+
+  def remove
+    @entry.remove
+    redirect_to contest_url(@contest)
+  end
+
+  def pick_winning
+    if @contest.pick_winner(@entry)
+      flash[:notice] = "Prize awarded to winner"
+    else
+      flash[:error] = "Error picking winner"
+    end
+    redirect_to contest_entry_url(@contest, @entry)
   end
 
   # DELETE /entries/1
