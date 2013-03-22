@@ -73,7 +73,7 @@ describe Contest do
 
     describe 'succesful' do
       before do
-        entry.user.should_receive(:credit).with(contest.bounty * 0.9)
+        entry.user.should_receive(:credit).with(contest.bounty * 0.9 * 100)
       end
 
       it 'should credit entry owner by 90% bounty amount' do
@@ -95,7 +95,7 @@ describe Contest do
       let!(:another_entry) { create :entry, contest: contest }
 
       before do
-        entry.user.should_receive(:credit).with(contest.bounty * 0.9)
+        entry.user.should_receive(:credit).with(contest.bounty * 0.9 * 100)
         contest.update_attributes(winner: entry)
       end
 

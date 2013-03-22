@@ -10,7 +10,7 @@ class Contest < ActiveRecord::Base
   validates :bounty, :deadline, :description, :name, :user, presence: true
   validate :owner_has_account, :on => :create
   after_create :create_bounty, :follow_contest
-  before_save :update_winner
+  before_save :update_winner, :if => :winner_id_changed?
 
   def expired?
     winner.present? || deadline <= Time.now
@@ -18,12 +18,10 @@ class Contest < ActiveRecord::Base
 
   private
   def update_winner
-    if winner_id_changed?
-      if winner_id_was || winner.removed
-        self.winner_id = winner_id_was
-      else
-        winner.user.credit(bounty * 0.9 * 100)
-      end
+    if winner_id_was || winner.removed
+      self.winner_id = winner_id_was
+    else
+      winner.user.credit(bounty * 0.9 * 100)
     end
   end
 
