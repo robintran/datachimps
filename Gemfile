@@ -1,13 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'rails', '3.2.12'
 
 gem 'pg'
-gem 'haml'
 gem 'haml-rails'
 gem 'stripe'
 gem 'devise'
-gem 'omniauth'
 gem 'omniauth-facebook'
 
 gem 'will_paginate'
@@ -45,10 +43,11 @@ gem 'jquery-rails'
 
 group :test, :development do
   gem 'debugger'
+  gem 'zeus', :require => false
+  gem 'rspec-rails'
 end
 
 group :test do
-  gem 'rspec-rails'
   gem 'capybara', '~> 2.0.2'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
