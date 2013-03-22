@@ -16,6 +16,13 @@ class Contest < ActiveRecord::Base
     winner.present? || deadline <= Time.now
   end
 
+  def pick_winner(win_entry)
+    return false if self.winner || win_entry.removed
+    self.update_attributes(winner: win_entry)
+    win_entry.user.credit(bounty * 0.9 * 100)
+    return true
+  end
+
   private
   def update_winner
     if winner_id_was || winner.removed
