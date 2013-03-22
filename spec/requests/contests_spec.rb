@@ -15,6 +15,7 @@ describe 'Contest pages', :js => true do
         fill_in "contest[bounty]", :with => "4"
         click_on "Save"
       end
+      page.driver.browser.switch_to.alert.accept
       page.should have_content "Name: Contest 1"
       page.should have_content "Bounty: 4"
     end
