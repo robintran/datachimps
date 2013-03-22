@@ -66,21 +66,42 @@ describe Contest do
     end
   end
 
-  describe "#pick_winner" do
-    let(:contest) { create(:contest) }
-    let!(:entry) { create(:entry, contest: contest) }
-    let!(:another_entry) { create(:entry, contest: contest) }
-    describe 'successful' do
-      it "credit entry's owner by 'bounty' amount" do
-        entry.user.should_receive(:credit).with(contest.bounty * 90)
-        expect(contest.pick_winner(entry)).to be_true
+  describe '#before_save' do
+    let(:contest) { create :contest }
+    let!(:entry) { create :entry, contest: contest }
+
+
+    describe 'succesful' do
+      before do
+        entry.user.should_receive(:credit).with(contest.bounty * 0.9)
+      end
+
+      it 'should credit entry owner by 90% bounty amount' do
+        contest.update_attributes(winner: entry)
+        contest.reload.winner.should == entry
       end
     end
 
-    describe 'unsuccessful' do
-      it "should return false" do
+    describe 'the entry was removed' do
+      let!(:removed_entry) { create :entry, removed: true, contest: contest }
+
+      it 'should not update the winner' do
+        contest.update_attributes(winner: removed_entry)
+        contest.reload.winner.should be_nil
+      end
+    end
+
+    describe 'the contest winner was set already' do
+      let!(:another_entry) { create :entry, contest: contest }
+
+      before do
+        entry.user.should_receive(:credit).with(contest.bounty * 0.9)
         contest.update_attributes(winner: entry)
-        expect(contest.pick_winner(another_entry)).to be_false
+      end
+
+      it 'should not update the winner' do
+        contest.update_attributes(winner: another_entry)
+        contest.reload.winner.should == entry
       end
     end
   end

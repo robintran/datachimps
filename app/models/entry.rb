@@ -23,6 +23,10 @@ class Entry < ActiveRecord::Base
     self.save
   end
 
+  def headline
+    "#{user.email} - #{description.try(:[], 0..10)}"
+  end
+
   private
 
   def own_contest
