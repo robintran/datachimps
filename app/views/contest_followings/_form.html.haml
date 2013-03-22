@@ -1,0 +1,16 @@
+= form_for @contest_following do |f|
+  - if @contest_following.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@contest_following.errors.count, "error")} prohibited this contest_following from being saved:"
+      %ul
+        - @contest_following.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :contest
+    = f.text_field :contest
+  .field
+    = f.label :user
+    = f.text_field :user
+  .actions
+    = f.submit 'Save'

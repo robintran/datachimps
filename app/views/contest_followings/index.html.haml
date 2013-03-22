@@ -1,0 +1,11 @@
+%h1 Listing contest_followings
+
+%table
+  %tr
+    %th Contest
+    %th
+
+  - @contest_followings.each do |contest_following|
+    %tr
+      %td= link_to contest_following.contest.name, contest_path(contest_following.contest)
+      %td= link_to 'Unfollow', contest_following, :method => :delete, :data => { :confirm => 'Are you sure?' }

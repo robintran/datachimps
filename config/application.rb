@@ -65,6 +65,6 @@ module Datachimp
       gen.fixture_replacement :factory_girl, :dir=>"spec/factories"
     end
 
-    config.filepicker_rails.api_key = ENV['FILEPICKER_IO_API_KEY']
+    config.filepicker_rails.api_key = ENV['FILEPICKER_IO_API_KEY'] || 'A4yVhsFfLQKygmlQ499EXz'
   end
 end

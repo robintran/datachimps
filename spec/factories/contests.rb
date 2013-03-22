@@ -2,10 +2,10 @@
 
 FactoryGirl.define do
   factory :contest do
-    association(:user, factory: :user)
-    name "MyString"
-    description "MyText"
-    deadline "2013-03-07 00:56:56"
-    bounty 1
+    user
+    name Faker::Lorem.word
+    description Faker::Lorem.sentence
+    deadline 1.day.from_now
+    bounty { rand(100) }
   end
 end

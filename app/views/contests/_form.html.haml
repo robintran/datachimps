@@ -15,6 +15,10 @@
   .field
     = f.label :deadline
     = f.datetime_select :deadline
+  - if @contest.contestants.count > 0
+    .field
+      = f.label :winner
+      = f.select 'winner_id', options_from_collection_for_select(@contest.contestants, :id, :email)
   .field
     = f.label :bounty
     - if @contest.new_record?

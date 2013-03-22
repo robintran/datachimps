@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
 
   has_many :contests
   has_many :won_contests, class_name: "Contest", foreign_key: :winner_id
+  has_many :contest_followings, dependent: :destroy
+  has_many :following_contests, source: :contest, through: :contest_followings
 
   after_create :create_balanced_account
   include ::BalancedAccount
@@ -31,17 +33,18 @@ class User < ActiveRecord::Base
   end
 
   def follow(contest)
-    # TODO
-    # allow uset to follow a contest "unless already_followed?(contest)"
+    contest_followings.create(contest: contest)
   end
 
+  def following?(contest)
+    contest_followings.exists?(contest_id: contest.id)
+  end
+
+  def contest_following_for(contest)
+    contest_followings.find_by_contest_id(contest.id)
+  end
 
   private
-
-  def already_followed?(contest)
-    #TODO
-  end
-
   def create_balanced_account
     unless self.balanced_account_uri
       account = marketplace.create_account

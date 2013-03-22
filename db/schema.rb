@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130316032901) do
+ActiveRecord::Schema.define(:version => 20130320153440) do
+
+  create_table "contest_followings", :force => true do |t|
+    t.integer  "contest_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "contest_followings", ["contest_id"], :name => "index_contest_followings_on_contest_id"
+  add_index "contest_followings", ["user_id"], :name => "index_contest_followings_on_user_id"
 
   create_table "contests", :force => true do |t|
     t.integer  "user_id"

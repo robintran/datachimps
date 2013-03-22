@@ -2,7 +2,6 @@
 
 %table
   %tr
-    %th User
     %th Name
     %th Description
     %th Deadline
@@ -12,18 +11,20 @@
 
   - @contests.each do |contest|
     %tr
-      %td= contest.user.name
-      %td= contest.name
+      %td= link_to contest.name, contest
       %td= contest.description
       %td= contest.deadline
       %td= contest.winner.name if contest.winner
       %td= contest.bounty
       %td
-        = link_to 'Show', contest
-        - if current_user == contest.user
-          = link_to 'Edit', edit_contest_path(contest)
-          = link_to 'Destroy', contest, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
+        - if current_user.present?
+          - if current_user == contest.user
+            = link_to 'Edit', edit_contest_path(contest)
+            = link_to 'Destroy', contest, :method => :delete, :data => { :confirm => 'Are you sure?' }
+          - else
+            - if current_user.following?(contest)
+              = link_to 'Unfollow', contest_following_path(current_user.contest_following_for(contest)), method: :delete, :data => { :confirm => 'Are you sure?' }
+            - else
+              = link_to 'Follow', contest_followings_path(contest_following: { contest_id: contest.id }), method: :post
 %br
-
 = link_to 'New Contest', new_contest_path

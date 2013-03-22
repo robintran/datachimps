@@ -9,7 +9,7 @@
     = csrf_meta_tags
     = yield :extra_js
   %body
-    = render 'shared/navigation' if user_signed_in?
+    = render 'shared/navigation'
     %p.notice= notice
     %p.alert= alert
     #main
