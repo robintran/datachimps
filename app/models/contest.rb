@@ -22,7 +22,7 @@ class Contest < ActiveRecord::Base
       if winner_id_was || winner.removed
         self.winner_id = winner_id_was
       else
-        winner.user.credit(bounty * 0.9)
+        winner.user.credit(bounty * 0.9 * 100)
       end
     end
   end
