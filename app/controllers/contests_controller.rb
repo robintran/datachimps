@@ -17,8 +17,9 @@ class ContestsController < ApplicationController
   # GET /contests/1
   # GET /contests/1.json
   def show
+    flash[:notice] = 'Contest has passed deadline, please choose a winner' if @contest.passed_deadline?
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @contest }
     end
   end

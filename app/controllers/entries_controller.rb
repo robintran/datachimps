@@ -4,6 +4,8 @@ class EntriesController < ApplicationController
   before_filter :find_entry, except: [:index, :new, :create]
   before_filter :verify_ownership, only: [:edit, :update, :destroy]
   before_filter :verify_contest_ownership, only: [:rate, :remove]
+  before_filter :verify_submission_permission, only: [:new]
+  before_filter :verify_view_permission, only: [:show]
   # GET /entries
   # GET /entries.json
   def index
@@ -38,7 +40,7 @@ class EntriesController < ApplicationController
   end
 
   # GET /entries/1/edit
-  def edits
+  def edit
   end
 
   # POST /entries
@@ -123,6 +125,20 @@ class EntriesController < ApplicationController
     unless current_user == @contest.user
       redirect_to root_path
       return
+    end
+  end
+
+  def verify_submission_permission
+    if current_user == @contest.user
+      redirect_to contest_path(@contest), notice: 'Cannot enter your own contest.'
+    elsif @contest.entries.exists?(user_id: current_user.id)
+      redirect_to contest_path(@contest), notice: 'You cannot enter contest twice.'
+    end
+  end
+
+  def verify_view_permission
+    unless current_user == @contest.user || current_user == @entry.user
+      redirect_to contest_path(@contest), notice: 'You cannot view other submitted entries'
     end
   end
 end

@@ -90,7 +90,7 @@ describe BankAccountsController do
 
       it 'should redirect to bank_accounts_path with no notice' do
         response.should redirect_to bank_accounts_path
-        flash.should be_empty
+        flash[:notice].should == 'Bank account was destroyed successfully.'
       end
     end
 

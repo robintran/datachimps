@@ -38,7 +38,7 @@ class BankAccountsController < ApplicationController
 
     respond_to do |format|
       if @bank_account.destroy
-        format.html { redirect_to bank_accounts_path }
+        format.html { redirect_to bank_accounts_path, notice: 'Bank account was destroyed successfully.' }
         format.json { head :no_content }
       else
         format.html { redirect_to bank_accounts_path, notice: @bank_account.errors.full_messages.first }

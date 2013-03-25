@@ -20,7 +20,7 @@ class Entry < ActiveRecord::Base
 
   def remove
     self.removed = true
-    self.save
+    save
   end
 
   def headline
@@ -30,11 +30,11 @@ class Entry < ActiveRecord::Base
   private
 
   def own_contest
-    errors.add(:base, "Cannot enter your own contest.") if contest.user == self.user
+    errors.add(:base, "Cannot enter your own contest.") if contest.try(:user) == user
   end
 
   def contest_not_expired
-    errors.add(:base, "The contest is expired.") if contest.expired?
+    errors.add(:base, "The contest is expired.") if contest.try(:expired?)
   end
 
   def owner_has_account
@@ -42,6 +42,6 @@ class Entry < ActiveRecord::Base
   end
 
   def follow_contest
-    user.follow(self.contest)
+    user.follow(contest)
   end
 end

@@ -13,7 +13,11 @@ class Contest < ActiveRecord::Base
   before_save :update_winner, :if => :winner_id_changed?
 
   def expired?
-    winner.present? || deadline <= Time.now
+    winner.present? || passed_deadline?
+  end
+
+  def passed_deadline?
+    deadline <= Time.now
   end
 
   def pick_winner(win_entry)

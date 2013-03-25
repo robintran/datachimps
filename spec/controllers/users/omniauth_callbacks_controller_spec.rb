@@ -13,6 +13,7 @@ describe Users::OmniauthCallbacksController do
 
       it "should find and sign user in" do
         response.should redirect_to(root_path)
+        controller.current_user.should == mock_user
       end
     end
 

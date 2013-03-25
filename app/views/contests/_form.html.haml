@@ -14,7 +14,7 @@
     = f.text_area :description
   .field
     = f.label :deadline
-    = f.datetime_select :deadline
+    = f.datetime_select :deadline, default: 1.day.from_now
   - if @contest.entries.count > 0
     - if @contest.winner
       .field

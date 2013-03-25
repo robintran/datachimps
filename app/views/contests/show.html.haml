@@ -28,7 +28,3 @@
 - unless @contest.expired?
   %p= link_to "Add entry", new_contest_entry_path(@contest)
 = render partial: "entries/entry", collection: @contest.entries.active
-
-- if @contest.deadline <= Time.now
-  :javascript
-    alert('Contest has passed deadline, please choose a winner');

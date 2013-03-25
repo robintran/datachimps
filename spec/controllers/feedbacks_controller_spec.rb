@@ -9,6 +9,7 @@ describe FeedbacksController do
   let(:contest) { create(:contest, user: user) }
   let(:entry) { create(:entry, user: user) }
   let(:user) { create(:user) }
+
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
     sign_in user

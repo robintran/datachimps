@@ -40,6 +40,19 @@ describe EntriesController do
   end
 
   describe "GET new" do
+    context 'submit new entry to your own contest' do
+      let(:own_contest) { create :contest, user: user }
+
+      before do
+        get :new, contest_id: own_contest.id
+      end
+
+      it 'should redirect to contest_path with error message' do
+        response.should redirect_to contest_path(own_contest)
+        flash[:notice].should == 'Cannot enter your own contest.'
+      end
+    end
+
     it "assigns a new entry as @entry" do
       get :new, {contest_id: contest.id}
       assigns(:entry).should be_a_new(Entry)

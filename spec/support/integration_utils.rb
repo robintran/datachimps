@@ -6,3 +6,15 @@ def login(user)
     click_on "Sign in"
   end
 end
+
+def wait_until timeout=5
+  Timeout::timeout(timeout) do
+    sleep(1) until yield
+  end
+end
+
+def wait_for_jquery
+  wait_until do
+    page.evaluate_script('window.jQuery')
+  end
+end

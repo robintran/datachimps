@@ -17,7 +17,7 @@ class ContestFollowingsController < ApplicationController
     @contest_following = current_user.contest_followings.new(params[:contest_following])
     respond_to do |format|
       if @contest_following.save
-        format.html { redirect_to contest_followings_path }
+        format.html { redirect_to contest_followings_path, notice: 'Following contest succesfully' }
         format.json { render json: @contest_following, status: :created, location: @contest_following }
       else
         format.html { redirect_to contests_path, notice: @contest_following.errors.full_messages.first }
@@ -34,7 +34,7 @@ class ContestFollowingsController < ApplicationController
     @contest_following.destroy
 
     respond_to do |format|
-      format.html { redirect_to contests_path }
+      format.html { redirect_to contests_path, notice: 'Unfollowing contest successfully' }
       format.json { head :no_content }
     end
   end

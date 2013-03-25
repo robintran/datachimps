@@ -10,12 +10,12 @@ describe Entry do
     it {should validate_presence_of(:user)}
     it {should validate_presence_of(:description)}
     it {should validate_presence_of(:data_set_url)}
-    # TODO: figure out why this fail for no reason
-    # it {should validate_uniqueness_of(:user_id).with_message("cannot enter contest twice").scoped_to(:contest_id)}
+    it {should validate_uniqueness_of(:user_id).with_message(/cannot enter contest twice/).scoped_to(:contest_id)}
   end
 
   describe '.remove' do
     let(:entry) { create(:entry) }
+
     it "set removed to true" do
       expect(entry.remove).to be_true
       expect(entry.removed).to be_true
@@ -39,6 +39,7 @@ describe Entry do
   describe "on_create" do
     describe "#owner_has_account" do
       let(:entry) { build(:entry) }
+
       context "create" do
         it "should be called" do
           entry.should_receive(:owner_has_account).and_return true

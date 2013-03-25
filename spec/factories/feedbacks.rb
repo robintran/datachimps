@@ -3,6 +3,7 @@
 FactoryGirl.define do
   factory :feedback do
     association(:entry, factory: :entry)
+    association(:user, factory: :user)
     content "MyText"
   end
 end
