@@ -12,6 +12,9 @@ class Contest < ActiveRecord::Base
   after_create :create_bounty, :follow_contest
   before_save :update_winner, :if => :winner_id_changed?
 
+  scope :pending, where('winner_id is NULL and deadline > ?', Time.now)
+  scope :expired, where('winner_id is not NULL or deadline < ?', Time.now)
+
   def expired?
     winner.present? || passed_deadline?
   end

@@ -1,4 +1,5 @@
 class FeedbacksController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :find_contest
   before_filter :find_entry
   before_filter :find_feedback, only: [:update, :destroy]

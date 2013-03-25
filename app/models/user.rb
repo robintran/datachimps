@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :won_contests, class_name: "Contest", foreign_key: :winner_id
   has_many :contest_followings, dependent: :destroy
   has_many :following_contests, source: :contest, through: :contest_followings
+  has_many :entries
 
   after_create :create_balanced_account
   include ::BalancedAccount
@@ -30,6 +31,14 @@ class User < ActiveRecord::Base
                                   )
     end
     user
+  end
+
+  def pending_contests
+    user_contests.pending
+  end
+
+  def last_contests
+    user_contests.expired
   end
 
   def own?(contest)
@@ -49,6 +58,10 @@ class User < ActiveRecord::Base
   end
 
   private
+  def user_contests
+    Contest.joins(:entries).where('entries.user_id = ?', id)
+  end
+
   def create_balanced_account
     unless self.balanced_account_uri
       account = marketplace.create_account

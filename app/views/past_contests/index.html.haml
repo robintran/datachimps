@@ -1,0 +1,17 @@
+%h1 Last contests
+
+%table
+  %tr
+    %th Name
+    %th Description
+    %th Winner
+    %th Bounty
+
+  - @contests.each do |contest|
+    %tr
+      %td= link_to contest.name, contest
+      %td= contest.description
+      %td= contest.deadline
+      %td= contest.winner.present? ? contest.winner.user.name : 'N/A'
+      %td= contest.bounty
+

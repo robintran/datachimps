@@ -1,0 +1,15 @@
+%h1 Pending contests
+
+%table
+  %tr
+    %th Name
+    %th Description
+    %th Deadline
+    %th Bounty
+
+  - @contests.each do |contest|
+    %tr
+      %td= link_to contest.name, contest
+      %td= contest.description
+      %td= contest.deadline
+      %td= contest.bounty

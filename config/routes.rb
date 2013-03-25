@@ -6,6 +6,8 @@ Datachimp::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   root :to => "contests#index"
+  resources :pending_contests, only: [:index]
+  resources :past_contests, only: [:index]
 
   resources :contests do
     resources :entries do
