@@ -20,10 +20,6 @@
       .field
         = f.label :winner
         = @contest.winner.headline
-    - else
-      .field
-        = f.label :winner
-        = f.select 'winner_id', options_from_collection_for_select(@contest.entries, :id, :headline)
   .field
     = f.label :bounty
     - if @contest.new_record?

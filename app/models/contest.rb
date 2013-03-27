@@ -9,8 +9,8 @@ class Contest < ActiveRecord::Base
 
   validates :bounty, :deadline, :description, :name, :user, presence: true
   validate :owner_has_account, :on => :create
-  after_create :create_bounty, :follow_contest
-  before_save :update_winner, :if => :winner_id_changed?
+  before_create :create_bounty
+  after_create :follow_contest
 
   scope :pending, where('winner_id is NULL and deadline > ?', Time.now)
   scope :expired, where('winner_id is not NULL or deadline < ?', Time.now)
@@ -31,20 +31,13 @@ class Contest < ActiveRecord::Base
   end
 
   private
-  def update_winner
-    if winner_id_was || winner.removed
-      self.winner_id = winner_id_was
-    else
-      winner.user.credit(bounty * 0.9 * 100)
-    end
-  end
 
   def owner_has_account
     errors.add(:base, "Owner must have a credit card to create a new contest.") unless user.credit_cards.any?
   end
 
   def create_bounty
-    user.charge(bounty)
+    user.charge(bounty * 100)
   end
 
   def follow_contest

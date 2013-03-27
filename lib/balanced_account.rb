@@ -55,7 +55,7 @@ module BalancedAccount
 
   def charge(amount_in_cents, opts = {})
     default_opts = {
-      appears_on_statement_as: "Contest creation on Datachimp",
+      appears_on_statement_as: "Datachimp contest",
       amount: amount_in_cents,
       description: "You have created a contest on Datachimp and $#{amount_in_cents.to_f/100} is deducted from your account"
     }.merge(opts)
