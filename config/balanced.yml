@@ -1,5 +1,6 @@
 defaults: &defaults
-  market_place_uri: '/v1/marketplaces/TEST-MPHd0xEHxs5Lc3Hb4nzMkSs'
+  # market_place_uri: '/v1/marketplaces/TEST-MPHd0xEHxs5Lc3Hb4nzMkSs'
+  market_place_uri: '/v1/marketplaces/TEST-MP7GSAmYbojIGY60rJ9b0Iwq'
 
 development:
   <<: *defaults
