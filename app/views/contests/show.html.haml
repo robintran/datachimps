@@ -19,7 +19,7 @@
   %b Bounty:
   = @contest.bounty
 
-- if current_user.own?(@contest)
+- if current_user && current_user.own?(@contest)
   = link_to 'Edit', edit_contest_path(@contest)
   \|
 = link_to 'Back', contests_path
@@ -28,3 +28,4 @@
 - unless @contest.expired?
   %p= link_to "Add entry", new_contest_entry_path(@contest)
 = render partial: "entries/entry", collection: @contest.entries.active
+

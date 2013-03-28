@@ -87,7 +87,7 @@ class EntriesController < ApplicationController
   end
 
   def pick_winning
-    if @contest.pick_winner(@entry)
+    if @entry.user.credit_cards.any? && @contest.pick_winner(@entry)
       flash[:notice] = "Prize awarded to winner"
     else
       flash[:error] = "Error picking winner"
@@ -142,3 +142,4 @@ class EntriesController < ApplicationController
     end
   end
 end
+
