@@ -1,5 +1,5 @@
 .entry
-  - if current_user.own?(entry.contest)
+  - if current_user && current_user.own?(entry.contest)
     .user
       = link_to entry.user.name, contest_entry_path(entry.contest, entry)
     .url
@@ -14,3 +14,4 @@
       = pluralize(entry.feedbacks.count, "feedback")
   - else
     .user= entry.user.name
+
