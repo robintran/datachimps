@@ -1,6 +1,6 @@
 defaults: &defaults
-  app_id: '106506012835769'
-  app_secret: '46af211d4e40b32dbec09d183ad4257f'
+  app_id: '325004784270336'
+  app_secret: 'bab585883a309071118621a39bb302f9'
 
 development:
   <<: *defaults
